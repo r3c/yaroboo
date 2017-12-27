@@ -1,0 +1,4 @@
+/src/config.php
+/src/config.php.*
+!/src/config.php.dist
+.creep.env

@@ -1,0 +1,27 @@
+<?php
+
+$config = array
+(
+	// Domain on which cookie is set, "null" to use origin domain
+	'cookie.domain'			=> null,
+
+	// Path for which cookie is set
+	'cookie.path'			=> '/',
+
+	// Image caching duration in seconds ; disabled for development but set to 15 minutes in production
+	'image.expire'			=> 0,
+
+	// Images file extension, also used as MIME type with an "image/" prefix (only works with standard types)
+	'image.extension'		=> 'png',
+
+	// Base URL to the directory from which images are served, without a trailing "/"
+	'image.url'				=> '//' . $_SERVER['HTTP_HOST'] . mb_ereg_replace ('/?[?#].*', '', $_SERVER['REQUEST_URI']) . '/../static/image',
+
+	// User-agent for outgoing HTTP requests
+	'openweathermap.agent'	=> 'Mozilla/5.0 (compatible; Boo; +http://boo.yaronet.com/)',
+
+	// API key for OpenWeatherMap requests
+	'openweathermap.appid'	=> 'your-openweathermap-key'
+);
+
+?>

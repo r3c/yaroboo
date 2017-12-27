@@ -1,0 +1,8 @@
+{
+	"modifiers": [
+		{
+			"pattern":	"\\.dist$",
+			"filter":	""
+		}
+	]
+}
