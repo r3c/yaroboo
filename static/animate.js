@@ -4,85 +4,115 @@
 $(function ()
 {
 	/*
-	** Handles all jingle-related features.
+	** Load and play a jingle from a URL
+	** jingleURL:		URL of jingle to play
 	*/
-	var jingleInit = function (target, booVariant, basePath)
-	{
-		var jingleData = [];
+	var jinglePlay = function (jingleURL)
+	{			 
+		// Load the data
+		$.getJSON (jingleURL, function (jingleData) {
+			
+			// Create the audio context
+			var audioContext;
+			
+			if (window.AudioContext !== undefined)
+			{
+				audioContext = new window.AudioContext();
+			}
+			else if (window.webkitAudioContext !== undefined)
+			{
+				audioContext = new window.webkitAudioContext();
+			}			
+			else
+			{
+				// Stop if Web Audio API is not supported
+				return;
+			}
 
-		/*
-		** Play the jingle.
-		*/
-		var jinglePlay = function ()
-		{
-			var audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
+			// Set the sound synthesis parameters
 			var duration = 6.0;
-			var frequency = 440.0 * Math.pow(2.0, 15 / 12.0);
+			var frequency = 440.0 * Math.pow (2.0, 15 / 12.0);
 			var harmonics = [[1.0, -13.0, 13.5], [3.0, -40.5, 49.9], [5.5, -2.0, 47.3], [6.0, -25.5, 23.5], [8.0, -31.9, 30.4], [8.5, -11.8, 54.5]];
 			var fadeInDuration = 0.0001;
-			var fadeOutDuration = 1.0;
-
-			var audioBuffer = audioContext.createBuffer(1, audioContext.sampleRate * duration, audioContext.sampleRate);
-			var audioData = audioBuffer.getChannelData(0);
-
-			for (var i = 0; i < audioBuffer.length; i++)
-			{
-				var t = i / audioBuffer.sampleRate;
-				var omega = 2.0 * Math.PI * t;
-				var sample = 0.0;
-				
-				for (var j = 0; j < harmonics.length; j++)
-				{
-					var amplitude = Math.pow(10, (harmonics[j][1] - (t * harmonics[j][2])) / 20);
-					
-					sample += amplitude * Math.sin(omega * frequency * harmonics[j][0]);
-				}
-				
-				audioData[i] = sample;
-			}
-
-			{
-				var n = fadeInDuration * audioBuffer.sampleRate;
-				for (var i = 0; i < n; i++)
-				{
-					audioData[i] *= i / n;
-				}
-			}
-
-			{
-				var n = fadeOutDuration * audioBuffer.sampleRate;
-				for (var i = 0; i < n; i++)
-				{
-					audioData[(audioBuffer.Length - 1) - i] *= i / n;
-				}
-			}
-			 
-			var t = audioContext.currentTime + 0.1;
-			for (var i = 0; i < jingleData.melody.length; i++)
-			{
-				var audioSource = audioContext.createBufferSource();
-				audioSource.buffer = audioBuffer;
-				audioSource.playbackRate.value = Math.pow(2.0, jingleData.melody[i][0] / 12.0);
-				audioSource.connect(audioContext.destination);
-				audioSource[audioSource.start ? 'start' : 'noteOn'](t);
-				
-				t += jingleData.melody[i][1] / 1000.0;
-			}			
-		};
-	
-		// Try to load the jingle for the current Boo variant, and create the play button if successful.
-		$.getJSON(basePath + '/jingle/' + booVariant + '.json', function(data) {
-			jingleData = data;
+			var fadeOutDuration = 1.0;			
 			
-			var button = document.createElement('img');
+			// Create an audio buffer for the base note
+			var audioBuffer = audioContext.createBuffer (1, audioContext.sampleRate * duration, audioContext.sampleRate);
+			var audioData = audioBuffer.getChannelData (0);
+			
+			// Synthesize the base note
+			{
+				// Generate the waveform
+				for (var i = 0; i < audioBuffer.length; i++)
+				{
+					var t = i / audioBuffer.sampleRate;
+					var omega = 2.0 * Math.PI * t;
+					var sample = 0.0;
+					
+					for (var j = 0; j < harmonics.length; j++)
+					{
+						var amplitude = Math.pow (10, (harmonics[j][1] - (t * harmonics[j][2])) / 20);
+						
+						sample += amplitude * Math.sin (omega * frequency * harmonics[j][0]);
+					}
+					
+					audioData[i] = sample;
+				}
 
-			button.src = basePath + '/image/jingle-play.png';
-			button.style = 'position: absolute; right: 0px; top: 0px; opacity: 0.75; width: 20px; height: 20px;';
-			button.addEventListener('click', jinglePlay, false);
+				// Apply the initial fade-in
+				{
+					var n = fadeInDuration * audioBuffer.sampleRate;
+					for (var i = 0; i < n; i++)
+					{
+						audioData[i] *= i / n;
+					}
+				}
+				
+				// Apply the final fade-out
+				{
+					var n = fadeOutDuration * audioBuffer.sampleRate;
+					for (var i = 0; i < n; i++)
+					{
+						audioData[(audioBuffer.Length - 1) - i] *= i / n;
+					}
+				}
+			}
+			
+			// Generate the melody using the base note
+			{
+				var t = audioContext.currentTime + 0.1;
+				
+				for (var i = 0; i < jingleData.melody.length; i++)
+				{
+					var audioSource = audioContext.createBufferSource ();
+					audioSource.buffer = audioBuffer;
+					audioSource.playbackRate.value = Math.pow (2.0, jingleData.melody[i][0] / 12.0);
+					audioSource.connect (audioContext.destination);
+					audioSource[audioSource.start ? 'start' : 'noteOn'](t);
+					
+					t += jingleData.melody[i][1] / 1000.0;
+				}
+			}
+		});	
+	}
+		
+		
+	/*
+	** Add a jingle "play" button on top of the specified element.
+	** target:		target element, must be a <div>
+	** booVariant:	name of the Boo variant (e.g. 'kirby') matching the jingle 
+	** imagePath:	path to the location where images are stored
+	** jinglePath:	path to the location where jingles are stored
+	*/
+	var jingleAddPlayButton = function (target, booVariant, imagePath, jinglePath)
+	{
+		var button = document.createElement ('img');
 
-			document.getElementById("yn-mascot").appendChild(button);
-		});		
+		button.src = imagePath + 'jingle-play.png';
+		button.style = 'position: absolute; right: 0px; top: 0px; opacity: 0.75; width: 20px; height: 20px;';
+		button.addEventListener ('click', function () { jinglePlay (jinglePath + booVariant + '.json'); }, false);
+		
+		$(target).get (0).appendChild (button);		
 	};
 
 	
@@ -106,17 +136,17 @@ $(function ()
 
 		if (!match)
 			return;
-
+		
+		// Construct image and jingle paths from base path
 		var basePath = match[1];
 		var imagePath = basePath + '/image/';
+		var jinglePath = basePath + '/jingle/';
 
 		// Start animation if one is defined for current Boo variant
 		var layer = '<img style="position: absolute; left: 0; top: 0; opacity: 0;">';
 		var tick;
 		
 		var booVariant = $.cookie ('boo');
-		if (!booVariant || $.trim(booVariant) === '')
-			booVariant = 'default';
 
 		switch (booVariant)
 		{
@@ -169,15 +199,30 @@ $(function ()
 
 				break;
 			
-			default:
-				// jingleInit() expects target to be a <div>, so we need to create one 
-				// even if there's no animation for the current Boo variant
-				replace (target)
-					.append ($('<img>').prop ('src', imagePath + booVariant + '.png'));
+			
+			case 'bear':
+			case 'cardboard':
+			case 'china':
+			case 'cola':
+			case 'fireworks':
+			case 'kirby':
+			case 'particule':
+			case 'penguin':
+			case 'pixel':
+			case 'pizza':
+			case 'redhat':
+			case 'snake':
+			case 'space':
+			case 'swan':
+			case 'totoro':
+			case 'unicorn':
+			case 'yoshi':
+				// jingleAddPlayButton() expects target to be a <div>, so we need to create one from the existing <img>
+				var newTarget = replace (target)
+					.append ($('<img>').prop ('src', $(target).attr ('src')));
+				jingleAddPlayButton (newTarget, booVariant, imagePath, jinglePath);
 				break;
 		}
-
-		jingleInit(target, booVariant, basePath);
 	};
 
 	/*
