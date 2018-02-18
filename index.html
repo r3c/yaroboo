@@ -6,11 +6,42 @@
 		<title>yAroboo demo</title>
 	</head>
 	<body style="height: 100%; padding: 0; margin: 0; display: flex; flex-direction: column; justify-content: center;">
-		<p style="align-self: center;">Current Boo variant should appear below. Press Ctrl+F5 to fully refresh the page and preview your changes.</p>
-		<div style="align-self: center; padding: 8px; background-image: linear-gradient(#4b7ec1,#84a7d5);">
-			<img id="yn-mascot" src="src/?user=1" />
-			<script type="text/javascript" src="static/animate.js" async></script>
+		<p style="align-self: center;">
+			Input a Boo variant name and hit enter to preview it. Press Ctrl+F5 to fully refresh your changes.
+		</p>
+		<div id="container" style="align-self: center; padding: 8px; background-image: linear-gradient(#4b7ec1,#84a7d5);">
 		</div>
-		<p style="align-self: center;">If it doesn't make sure your PHP web server is started and no error appear in the JavaScript console.</p>
+		<p style="align-self: center;">
+			Variant name: <input id="force" type="text" />
+			<script type="text/javascript">
+				$(function () {
+					var select = function (name) {
+						var unique = Math.random();
+
+						$.cookie('boo', name);
+
+						$('#container')
+							.empty()
+							.append($('<img id="yn-mascot">')
+								.prop('src', 'static/image/' + name + '.png?cb=' + unique))
+							.append($('<script type="text/javascript" async>')
+								.prop('src', 'static/animate.js?cb=' + unique));
+					};
+
+					$('#force').on('keyup', function (event) {
+						if (event.which !== 13)
+							return;
+
+						select($(this).val());
+
+						event.preventDefault();
+
+						$(this).val('');
+					});
+
+					select('default');
+				});
+			</script>
+		</p>
 	</body>
 </html>

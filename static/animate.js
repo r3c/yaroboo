@@ -132,7 +132,7 @@ $(function ()
 		var target = $(this);
 
 		// Extract base path from script URL
-		var match =  /^(.*)\/animate\.js$/.exec ($('script[src$="/animate.js"]').prop ('src'));
+		var match =  /^(.*)\/animate\.js([?#].*)?$/.exec ($('script[src*="/animate.js"]').prop ('src'));
 
 		if (!match)
 			return;
