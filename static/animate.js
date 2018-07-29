@@ -116,6 +116,7 @@ $(function ()
 		var basePath = match[1];
 
 		// Start animation if one is defined for current Boo variant
+		var container = wrap (target);
 		var variant = $.cookie ('boo');
 
 		switch (variant)
@@ -136,7 +137,7 @@ $(function ()
 					});
 				};
 
-				wrap (target)
+				container
 					.append (createImage (basePath, 'christmas-glow').addClass ('g'))
 					.append (createImage (basePath, 'christmas-light0').addClass ('l'))
 					.append (createImage (basePath, 'christmas-light1').addClass ('l'))
@@ -159,7 +160,7 @@ $(function ()
 					});
 				};
 
-				wrap (target)
+				container
 					.append (createImage (basePath, 'sleep-z0').addClass ('z0'))
 					.append (createImage (basePath, 'sleep-z1').addClass ('z1'))
 					.append (createImage (basePath, 'sleep-z2').addClass ('z2'))
@@ -184,7 +185,7 @@ $(function ()
 			case 'totoro':
 			case 'unicorn':
 			case 'yoshi':
-				wrap (target)
+				container
 					.append (createButton (basePath, 'play').on ('click', function ()
 					{
 						jinglePlay (basePath, variant);
