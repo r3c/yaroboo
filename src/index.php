@@ -168,13 +168,18 @@ $time = time ();
 $user = isset ($_GET['user']) ? (int)$_GET['user'] : 0;
 
 $name = get_variant ($agent, $appid, $time, $user);
+$path = $config['image.path'] . '/' . $name . $config['image.extension'];
 
 // Emit HTTP redirection with caching directives
 header ('Cache-Control: public, max-age=' . $config['image.expire']);
+header ('Content-Length: ' . filesize ($path));
+header ('Content-Type: ' . $config['image.mime']);
 header ('Expires: ' . gmdate ('D, d M Y H:i:s', $time + $config['image.expire']) . ' GMT');
-header ('Location: ' . $config['image.url'] . '/' . $name . '.' . $config['image.extension']);
 
 // Store name in cookie so it can be read from JavaScript
 setcookie ('boo', $name, $time + $config['image.expire'] + 1, $config['cookie.path'], $config['cookie.domain']);
+
+// Read image contents
+readfile ($path);
 
 ?>

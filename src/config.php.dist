@@ -11,11 +11,14 @@ $config = array
 	// Image caching duration in seconds ; disabled for development but set to 15 minutes in production
 	'image.expire'			=> 0,
 
-	// Images file extension, also used as MIME type with an "image/" prefix (only works with standard types)
-	'image.extension'		=> 'png',
+	// Images file extension including "dot" character
+	'image.extension'		=> '.png',
 
-	// Base URL to the directory from which images are served, without a trailing "/"
-	'image.url'				=> '//' . $_SERVER['HTTP_HOST'] . mb_ereg_replace ('/?[?#].*', '', $_SERVER['REQUEST_URI']) . '/../static/image',
+	// Image MIME type
+	'image.mime'			=> 'image/png',
+
+	// Path to directory where images are stored, without a trailing "/"
+	'image.path'			=> '../res/image',
 
 	// User-agent for outgoing HTTP requests
 	'openweathermap.agent'	=> 'Mozilla/5.0 (compatible; Boo; +http://boo.yaronet.com/)',
