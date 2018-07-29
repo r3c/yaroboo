@@ -11,12 +11,6 @@ $(function ()
 
 	var createImage = function (basePath, name)
 	{
-		return $('<img>')
-			.prop ('src', basePath + '/image/' + name + '.png');
-	};
-
-	var createLayer = function (basePath, name)
-	{
 		return $('<img style="position: absolute; left: 0; top: 0; opacity: 0;">')
 			.prop ('src', basePath + '/image/' + name + '.png');
 	}
@@ -142,13 +136,12 @@ $(function ()
 					});
 				};
 
-				replace (target)
-					.append (createImage (basePath, variant))
-					.append (createLayer (basePath, 'christmas-glow').addClass ('g'))
-					.append (createLayer (basePath, 'christmas-light0').addClass ('l'))
-					.append (createLayer (basePath, 'christmas-light1').addClass ('l'))
-					.append (createLayer (basePath, 'christmas-light2').addClass ('l'))
-					.append (createLayer (basePath, 'christmas-light3').addClass ('l'))
+				wrap (target)
+					.append (createImage (basePath, 'christmas-glow').addClass ('g'))
+					.append (createImage (basePath, 'christmas-light0').addClass ('l'))
+					.append (createImage (basePath, 'christmas-light1').addClass ('l'))
+					.append (createImage (basePath, 'christmas-light2').addClass ('l'))
+					.append (createImage (basePath, 'christmas-light3').addClass ('l'))
 					.find ('.g').each (function () { tick ($(this), 1000, [500, 500], 0); }).end ()
 					.find ('.l').each (function () { tick ($(this), 250, [100, 100, 200, 200, 500, 500], 0); }).end ();
 
@@ -166,11 +159,10 @@ $(function ()
 					});
 				};
 
-				replace (target)
-					.append (createImage (basePath, variant))
-					.append (createLayer (basePath, 'sleep-z0').addClass ('z0'))
-					.append (createLayer (basePath, 'sleep-z1').addClass ('z1'))
-					.append (createLayer (basePath, 'sleep-z2').addClass ('z2'))
+				wrap (target)
+					.append (createImage (basePath, 'sleep-z0').addClass ('z0'))
+					.append (createImage (basePath, 'sleep-z1').addClass ('z1'))
+					.append (createImage (basePath, 'sleep-z2').addClass ('z2'))
 					.each (function () { tick ($(this), 0); });
 
 				break;
@@ -192,25 +184,34 @@ $(function ()
 			case 'totoro':
 			case 'unicorn':
 			case 'yoshi':
-				replace (target)
-					.append (createImage (basePath, variant))
-					.append (createButton (basePath, 'play').on ('click', function () { jinglePlay (basePath, variant); }));
+				wrap (target)
+					.append (createButton (basePath, 'play').on ('click', function ()
+					{
+						jinglePlay (basePath, variant);
+					}));
 
 				break;
 		}
 	};
 
 	/*
-	** Replace given element with new empty div and preserve its "id" property. This method is used
-	** to define a new animation from scratch without knowledge about what was previously running.
-	** previous:	element to be replaced
-	** return:		replaced element
+	** Ensure given element is wrapped within div with relative positioning and
+	** no other elements, creating parent or removing siblings if needed.
+	** target:	element to be wrapped
+	** return:	wrapper element
 	*/
-	var replace = function (previous)
+	var wrap = function (target)
 	{
-		return $('<div style="position: relative;">')
-			.prop ('id', previous.prop ('id'))
-			.replaceAll (previous);
+		var parent = target.parent ('.animate');
+
+		// Create parent and wrap target element when missing
+		if (parent.length === 0)
+			return target.wrap ($('<div class="animate" style="position: relative;">')).parent ();
+
+		// Otherwise remove all child elements but original target
+		parent.children ().not (target).remove ();
+
+		return parent;
 	};
 
 	// Bind animation callback to image load event + trigger manually once in case image was
