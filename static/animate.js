@@ -116,7 +116,6 @@ $(function ()
 		var basePath = match[1];
 
 		// Start animation if one is defined for current Boo variant
-		var container = wrap (target);
 		var variant = $.cookie ('boo');
 
 		switch (variant)
@@ -137,7 +136,7 @@ $(function ()
 					});
 				};
 
-				container
+				wrap (target)
 					.append (createImage (basePath, 'christmas-glow').addClass ('g'))
 					.append (createImage (basePath, 'christmas-light0').addClass ('l'))
 					.append (createImage (basePath, 'christmas-light1').addClass ('l'))
@@ -160,7 +159,7 @@ $(function ()
 					});
 				};
 
-				container
+				wrap (target)
 					.append (createImage (basePath, 'sleep-z0').addClass ('z0'))
 					.append (createImage (basePath, 'sleep-z1').addClass ('z1'))
 					.append (createImage (basePath, 'sleep-z2').addClass ('z2'))
@@ -185,11 +184,16 @@ $(function ()
 			case 'totoro':
 			case 'unicorn':
 			case 'yoshi':
-				container
+				wrap (target)
 					.append (createButton (basePath, 'play').on ('click', function ()
 					{
 						jinglePlay (basePath, variant);
 					}));
+
+				break;
+
+			default:
+				wrap (target, true);
 
 				break;
 		}
@@ -198,16 +202,23 @@ $(function ()
 	/*
 	** Ensure given element is wrapped within div with relative positioning and
 	** no other elements, creating parent or removing siblings if needed.
-	** target:	element to be wrapped
-	** return:	wrapper element
+	** target:		element to be wrapped
+	** removeOnly:	true to only remove sibling elements if needed but do not
+	**				wrap otherwise
+	** return:		wrapper element
 	*/
-	var wrap = function (target)
+	var wrap = function (target, removeOnly)
 	{
 		var parent = target.parent ('.animate');
 
 		// Create parent and wrap target element when missing
 		if (parent.length === 0)
+		{
+			if (removeOnly)
+				return target;
+
 			return target.wrap ($('<div class="animate" style="position: relative;">')).parent ();
+		}
 
 		// Otherwise remove all child elements but original target
 		parent.children ().not (target).remove ();
