@@ -176,7 +176,6 @@ $(function ()
 			case 'particule':
 			case 'penguin':
 			case 'pixel':
-			case 'pizza':
 			case 'redhat':
 			case 'snake':
 			case 'space':
