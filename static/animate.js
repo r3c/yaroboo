@@ -121,6 +121,7 @@ $(function ()
 		switch (variant)
 		{
 			case 'christmas':
+			case 'christmas-dark':
 				var tick = function (target, duration, steps, index)
 				{
 					var delta = 0.25;
