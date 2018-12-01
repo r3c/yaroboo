@@ -5,13 +5,13 @@ $(function ()
 {
 	var createButton = function (basePath, name)
 	{
-		return $('<img style="position: absolute; right: 0px; top: 0px; opacity: 0.75; width: 20px; height: 20px;">')
+		return $('<img class="default-mascot" style="position: absolute; right: 0px; top: 0px; opacity: 0.75; width: 20px; height: 20px;">')
 			.prop ('src', basePath + '/ui/' + name + '.png');
 	};
 
 	var createImage = function (basePath, name)
 	{
-		return $('<img style="position: absolute; left: 0; top: 0; opacity: 0;">')
+		return $('<img class="default-mascot" style="position: absolute; left: 0; top: 0; opacity: 0;">')
 			.prop ('src', basePath + '/image/' + name + '.png');
 	}
 
