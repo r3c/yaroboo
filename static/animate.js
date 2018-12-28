@@ -5,11 +5,11 @@ $(function ()
 {
 	var createButton = function (basePath, name)
 	{
-		return $('<img class="default-mascot" style="position: absolute; right: 0px; top: 0px; opacity: 0.75; width: 20px; height: 20px;">')
+		return $('<img style="position: absolute; left: 0px; top: 0px; opacity: 0.75; width: 20px; height: 20px;">')
 			.prop ('src', basePath + '/ui/' + name + '.png');
 	};
 
-	var createImage = function (basePath, name)
+	var createLayer = function (basePath, name)
 	{
 		return $('<img class="default-mascot" style="position: absolute; left: 0; top: 0; opacity: 0;">')
 			.prop ('src', basePath + '/image/' + name + '.png');
@@ -138,11 +138,11 @@ $(function ()
 				};
 
 				wrap (target)
-					.append (createImage (basePath, 'christmas-glow').addClass ('g'))
-					.append (createImage (basePath, 'christmas-light0').addClass ('l'))
-					.append (createImage (basePath, 'christmas-light1').addClass ('l'))
-					.append (createImage (basePath, 'christmas-light2').addClass ('l'))
-					.append (createImage (basePath, 'christmas-light3').addClass ('l'))
+					.append (createLayer (basePath, 'christmas-glow').addClass ('g'))
+					.append (createLayer (basePath, 'christmas-light0').addClass ('l'))
+					.append (createLayer (basePath, 'christmas-light1').addClass ('l'))
+					.append (createLayer (basePath, 'christmas-light2').addClass ('l'))
+					.append (createLayer (basePath, 'christmas-light3').addClass ('l'))
 					.find ('.g').each (function () { tick ($(this), 1000, [500, 500], 0); }).end ()
 					.find ('.l').each (function () { tick ($(this), 250, [100, 100, 200, 200, 500, 500], 0); }).end ();
 
@@ -161,9 +161,9 @@ $(function ()
 				};
 
 				wrap (target)
-					.append (createImage (basePath, 'sleep-z0').addClass ('z0'))
-					.append (createImage (basePath, 'sleep-z1').addClass ('z1'))
-					.append (createImage (basePath, 'sleep-z2').addClass ('z2'))
+					.append (createLayer (basePath, 'sleep-z0').addClass ('z0'))
+					.append (createLayer (basePath, 'sleep-z1').addClass ('z1'))
+					.append (createLayer (basePath, 'sleep-z2').addClass ('z2'))
 					.each (function () { tick ($(this), 0); });
 
 				break;
