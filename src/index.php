@@ -146,15 +146,15 @@ function get_weather ($agent, $appid)
 		return null;
 
 	// Call FreeGeoIP to resolve latitude and longitude and return on invalid response
-	// See: http://freegeoip.net/
-	$geo = http_get_json ($agent, 'http://freegeoip.net/json/' . $ip_address);
+	// See: https://freegeoip.app/
+	$geo = http_get_json ($agent, 'https://freegeoip.app/json/' . $ip_address);
 
 	if ($geo === null || !isset ($geo['latitude']) || !isset ($geo['longitude']))
 		return null;
 
 	// Call OpenWeatherMap API to get weather information
 	// See: http://openweathermap.org/current#geo
-	$weather = http_get_json ($agent, 'http://api.openweathermap.org/data/2.5/weather?APPID=' . rawurlencode ($appid) . '&lat=' . rawurlencode ($geo['latitude']) . '&lon=' . rawurlencode ($geo['longitude']));
+	$weather = http_get_json ($agent, 'http://api.openweathermap.org/data/2.5/weather?appid=' . rawurlencode ($appid) . '&lat=' . rawurlencode ($geo['latitude']) . '&lon=' . rawurlencode ($geo['longitude']));
 
 	return $weather;
 }
