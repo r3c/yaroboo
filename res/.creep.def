@@ -1,8 +1,8 @@
 {
 	"modifiers": [
 		{
-			"pattern":	"\\.(gif|jpg|png)$",
-			"adapt":	"imagemin < '{}'"
+			"pattern": "\\.(gif|jpg|png)$",
+			"modify": "imagemin < '{}'"
 		}
 	]
 }

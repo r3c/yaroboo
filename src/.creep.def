@@ -1,8 +1,8 @@
 {
 	"modifiers": [
 		{
-			"pattern":	"\\.dist$",
-			"filter":	""
+			"pattern": "\\.dist$",
+			"filter": ""
 		}
 	]
 }

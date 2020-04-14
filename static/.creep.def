@@ -1,11 +1,11 @@
 {
 	"modifiers": [
 		{
-			"pattern":	"\\.min\\.js$"
+			"pattern": "\\.min\\.js$"
 		},
 		{
-			"pattern":	"\\.js$",
-			"modify":	"uglifyjs --compress --mangle -- '{}'"
+			"pattern": "\\.js$",
+			"modify": "uglifyjs --compress --mangle -- '{}'"
 		}
 	]
 }
