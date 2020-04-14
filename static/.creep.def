@@ -1,15 +1,11 @@
 {
 	"modifiers": [
 		{
-			"pattern":	"\\.(gif|jpg|png)$",
-			"adapt":	"imagemin < '{}'"
-		},
-		{
 			"pattern":	"\\.min\\.js$"
 		},
 		{
 			"pattern":	"\\.js$",
-			"adapt":	"uglifyjs --compress --mangle -- '{}'"
+			"modify":	"uglifyjs --compress --mangle -- '{}'"
 		}
 	]
 }
