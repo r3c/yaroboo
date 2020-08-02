@@ -18,9 +18,9 @@ class State
 
 /*
 ** Send HTTP GET request to given URL and decode resonse as a JSON object.
-** $agent:	user agent
-** $url:	target URL
-** return:	JSON response
+** $agent: user agent
+** $url: target URL
+** return: JSON response
 */
 function http_get_json($agent, $url)
 {
@@ -45,11 +45,11 @@ function http_get_json($agent, $url)
 /*
 ** Get name of Boo variant to display depending on user properties (weather and
 ** time of the day) and pre-defined matching rules.
-** $agent:	user agent (used for outgoing HTTP requests)
-** $appid:	application identifier for OpenWeatherMap
-** $time:	current Unix timestamp
-** $user:	current user id or 0 for guest users
-** return:	selected variant name
+** $agent: user agent (used for outgoing HTTP requests)
+** $appid: application identifier for OpenWeatherMap
+** $time: current Unix timestamp
+** $user: current user id or 0 for guest users
+** return: selected variant name
 */
 function get_variant($agent, $appid, $time, $user)
 {
@@ -64,127 +64,127 @@ function get_variant($agent, $appid, $time, $user)
 
         // Merge datetime and weather into single state structure
         $state = new State();
-        $state->cloudiness	= isset($weather['clouds']['all']) ? (int)$weather['clouds']['all'] : 0; // Cloudiness %
-        $state->condition	= isset($weather['weather'][0]['main']) ? strtolower($weather['weather'][0]['main']) : ''; // Condition name
-        $state->day			= (int)$day;
-        $state->hour		= (int)$hour;
-        $state->minute		= (int)$minute;
-        $state->month		= (int)$month;
-        $state->temperature	= isset($weather['main']['temp']) ? (int)$weather['main']['temp'] : 293.15; // Temperature in Kelvins
-        $state->user		= $user;
-        $state->weather		= isset($weather['weather'][0]['id']) ? (int)$weather['weather'][0]['id'] : 0; // Weather identifier
+        $state->cloudiness = isset($weather['clouds']['all']) ? (int)$weather['clouds']['all'] : 0; // Cloudiness %
+        $state->condition = isset($weather['weather'][0]['main']) ? strtolower($weather['weather'][0]['main']) : ''; // Condition name
+        $state->day = (int)$day;
+        $state->hour = (int)$hour;
+        $state->minute = (int)$minute;
+        $state->month = (int)$month;
+        $state->temperature = isset($weather['main']['temp']) ? (int)$weather['main']['temp'] : 293.15; // Temperature in Kelvins
+        $state->user = $user;
+        $state->weather = isset($weather['weather'][0]['id']) ? (int)$weather['weather'][0]['id'] : 0; // Weather identifier
 
         // Select boo variant according to current state
         $matches = array(
-            'drunk'				=> function ($state) {
+            'drunk' => function ($state) {
                 return $state->month === 1 && $state->day === 1;
             },
-            'crown'				=> function ($state) {
+            'crown' => function ($state) {
                 return $state->month === 1 && $state->day === 6;
             },
-            'yoshi'				=> function ($state) {
+            'yoshi' => function ($state) {
                 return $state->month === 1 && $state->day === 24;
             },
-            'pancake'			=> function ($state) {
+            'pancake' => function ($state) {
                 return $state->month === 2 && $state->day === 2;
             },
-            'valentine'			=> function ($state) {
+            'valentine' => function ($state) {
                 return $state->month === 2 && $state->day === 14;
             },
-            'cardboard'			=> function ($state) {
+            'cardboard' => function ($state) {
                 return $state->month === 2 && $state->day === 17;
             },
-            'bear'				=> function ($state) {
+            'bear' => function ($state) {
                 return $state->month === 6 && $state->day === 25;
             },
-            'redhat'			=> function ($state) {
+            'redhat' => function ($state) {
                 return $state->month === 7 && $state->day === 1;
             },
-            'fireworks'			=> function ($state) {
+            'fireworks' => function ($state) {
                 return $state->month === 7 && $state->day === 14;
             },
-            'snake'				=> function ($state) {
+            'snake' => function ($state) {
                 return $state->month === 8 && $state->day === 2;
             },
-            'china'				=> function ($state) {
+            'china' => function ($state) {
                 return $state->month === 8 && $state->day === 29;
             },
-            'unicorn'			=> function ($state) {
+            'unicorn' => function ($state) {
                 return $state->month === 9 && $state->day === 9;
             },
-            'penguin'			=> function ($state) {
+            'penguin' => function ($state) {
                 return $state->month === 9 && $state->day === 12;
             },
-            'space'				=> function ($state) {
+            'space' => function ($state) {
                 return $state->month === 9 && $state->day === 27;
             },
-            'particule'			=> function ($state) {
+            'particule' => function ($state) {
                 return $state->month === 10 && $state->day === 15;
             },
-            'swan'				=> function ($state) {
+            'swan' => function ($state) {
                 return $state->month === 10 && $state->day === 18;
             },
-            'pizza'				=> function ($state) {
+            'pizza' => function ($state) {
                 return $state->month === 10 && $state->day === 21;
             },
-            'pixel'				=> function ($state) {
+            'pixel' => function ($state) {
                 return $state->month === 10 && $state->day === 23;
             },
-            'ghost'				=> function ($state) {
+            'ghost' => function ($state) {
                 return $state->month === 10 && $state->day === 31;
             },
-            'totoro'			=> function ($state) {
+            'totoro' => function ($state) {
                 return $state->month === 11 && $state->day === 4;
             },
-            'cornflower'		=> function ($state) {
+            'cornflower' => function ($state) {
                 return $state->month === 11 && $state->day === 11;
             },
-            'kirby'				=> function ($state) {
+            'kirby' => function ($state) {
                 return $state->month === 12 && $state->day === 19;
             },
-            'christmas-dark'	=> function ($state) {
+            'christmas-dark' => function ($state) {
                 return $state->month === 12 && $state->day < 24 && ($state->hour + 2) % 24 <= 7;
             },
-            'christmas'			=> function ($state) {
+            'christmas' => function ($state) {
                 return $state->month === 12 && $state->day < 24;
             },
-            'santa'				=> function ($state) {
+            'santa' => function ($state) {
                 return $state->month === 12 && $state->day === 24;
             },
-            'gift'				=> function ($state) {
+            'gift' => function ($state) {
                 return $state->month === 12 && $state->day === 25;
             },
-            'cola'				=> function ($state) {
+            'cola' => function ($state) {
                 return $state->month === 12 && $state->day === 28;
             },
-            'yellow'			=> function ($state) {
+            'yellow' => function ($state) {
                 return $state->month === 12 && $state->day < 31;
             },
-            'party'				=> function ($state) {
+            'party' => function ($state) {
                 return $state->month === 12 && $state->day === 31;
             },
-            'dark'				=> function ($state) {
+            'dark' => function ($state) {
                 return $state->hour === 3 && $state->minute === 0;
             },
-            'sleep'				=> function ($state) {
+            'sleep' => function ($state) {
                 return ($state->hour + 1) % 24 <= 7;
             },
-            'freeze'			=> function ($state) {
+            'freeze' => function ($state) {
                 return $state->temperature < 269.15;
             },
-            'bobblehat'			=> function ($state) {
+            'bobblehat' => function ($state) {
                 return $state->temperature < 277.15;
             },
-            'hot'				=> function ($state) {
+            'hot' => function ($state) {
                 return $state->temperature > 305.15;
             },
-            'umbrella'			=> function ($state) {
+            'umbrella' => function ($state) {
                 return $state->condition === 'rain' && $state->weather > 500 && $state->cloudiness >= 50;
             },
-            'snow'				=> function ($state) {
+            'snow' => function ($state) {
                 return $state->condition === 'snow' && $state->weather > 600 && $state->cloudiness >= 50;
             },
-            'sunglass'			=> function ($state) {
+            'sunglass' => function ($state) {
                 return $state->hour >= 10 && $state->hour <= 18 && $state->cloudiness < 10 && $state->temperature > 297.15;
             }
         );
@@ -204,9 +204,9 @@ function get_variant($agent, $appid, $time, $user)
 /*
 ** Resolve geolocation from given user IP address and retrieve weather
 ** information for this location.
-** $agent:	user agent (used for outgoing HTTP requests)
-** $appid:	application identifier for OpenWeatherMap
-** return:	weather data from OpenWeatherMap
+** $agent: user agent (used for outgoing HTTP requests)
+** $appid: application identifier for OpenWeatherMap
+** return: weather data from OpenWeatherMap
 */
 function get_weather($agent, $appid)
 {
