@@ -82,8 +82,8 @@ please note that:
 Deployment
 ----------
 
-You can push your changes to any branch whose name starts with "topic/": these
-can freely be created, deleted and rewritten.
+Contact me so I can add you as contributor to this GitHub project, as well as
+add your IP address to yAronet test version whitelist.
 
 Any commit you push to branch named "test" will be automatically deployed to
 [test version of yAronet](http://www-test.yaronet.com) within an hour. This
