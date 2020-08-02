@@ -1,30 +1,27 @@
 <?php
 
-$config = array
-(
-	// Domain on which cookie is set, "null" to use origin domain
-	'cookie.domain'			=> null,
+$config = array(
+    // Domain on which cookie is set, "null" to use origin domain
+    'cookie.domain'			=> null,
 
-	// Path for which cookie is set
-	'cookie.path'			=> '/',
+    // Path for which cookie is set
+    'cookie.path'			=> '/',
 
-	// Image caching duration in seconds ; disabled for development but set to 15 minutes in production
-	'image.expire'			=> 0,
+    // Image caching duration in seconds ; disabled for development but set to 15 minutes in production
+    'image.expire'			=> 0,
 
-	// Images file extension including "dot" character
-	'image.extension'		=> '.png',
+    // Images file extension including "dot" character
+    'image.extension'		=> '.png',
 
-	// Image MIME type
-	'image.mime'			=> 'image/png',
+    // Image MIME type
+    'image.mime'			=> 'image/png',
 
-	// Path to directory where images are stored, without a trailing "/"
-	'image.path'			=> '../res/image',
+    // Path to directory where images are stored, without a trailing "/"
+    'image.path'			=> '../res/image',
 
-	// User-agent for outgoing HTTP requests
-	'openweathermap.agent'	=> 'Mozilla/5.0 (compatible; Boo; +http://boo.yaronet.com/)',
+    // User-agent for outgoing HTTP requests
+    'openweathermap.agent'	=> 'Mozilla/5.0 (compatible; Boo; +http://boo.yaronet.com/)',
 
-	// API key for OpenWeatherMap requests
-	'openweathermap.appid'	=> 'your-openweathermap-key'
+    // API key for OpenWeatherMap requests
+    'openweathermap.appid'	=> 'your-openweathermap-key'
 );
-
-?>
