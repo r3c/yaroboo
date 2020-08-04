@@ -176,7 +176,7 @@ function get_variant($agent, $appid, $time, $user)
                 return $state->temperature < 277.15;
             },
             'hot' => function ($state) {
-                return $state->temperature > 305.15;
+                return $state->temperature > 308.15;
             },
             'umbrella' => function ($state) {
                 return $state->condition === 'rain' && $state->weather > 500 && $state->cloudiness >= 50;
@@ -186,6 +186,9 @@ function get_variant($agent, $appid, $time, $user)
             },
             'sunglass' => function ($state) {
                 return $state->hour >= 10 && $state->hour <= 18 && $state->cloudiness < 10 && $state->temperature > 297.15;
+            },
+			'fan' => function ($state) {
+                return $state->temperature > 297.15;
             }
         );
 
