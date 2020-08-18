@@ -158,6 +158,7 @@ $(function () {
 			case 'cola':
 			case 'fireworks':
 			case 'kirby':
+			case 'nukem':			
 			case 'particule':
 			case 'penguin':
 			case 'pixel':
