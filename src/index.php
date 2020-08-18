@@ -106,7 +106,10 @@ function get_variant($agent, $appid, $time, $user)
             'snake' => function ($state) {
                 return $state->month === 8 && $state->day === 2;
             },
-            'china' => function ($state) {
+            'nukem' => function ($state) {
+                return $state->month === 8 && $state->day === 25;
+            },
+			'china' => function ($state) {
                 return $state->month === 8 && $state->day === 29;
             },
             'unicorn' => function ($state) {
