@@ -112,6 +112,9 @@ function get_variant($agent, $appid, $time, $user)
 			'china' => function ($state) {
                 return $state->month === 8 && $state->day === 29;
             },
+			'helmet' => function ($state) {
+                return $state->month === 9 && $state->day === 3;
+            },
             'unicorn' => function ($state) {
                 return $state->month === 9 && $state->day === 9;
             },
