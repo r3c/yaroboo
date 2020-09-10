@@ -16,7 +16,16 @@ $(function () {
 	** Load and play a jingle from a URL
 	** jingleURL:		URL of jingle to play
 	*/
-	var jinglePlay = function (basePath, name) {
+	var jinglePending = 0;
+	var jinglePlay = function (element, basePath, name) {
+		// Do not start a new jingle if one is already playing
+		if (jinglePending) {
+			return;
+		}
+
+		// Hide button until playback ends
+		element.css('visibility', 'hidden');
+
 		// Load the data
 		$.getJSON(basePath + '/jingle/' + name + '.json', function (jingleData) {
 			// Create the audio context
@@ -76,18 +85,34 @@ $(function () {
 
 				audioSource.buffer = audioBuffer;
 				audioSource.playbackRate.value = Math.pow(2.0, jingleData.melody[i][0] / 12.0);
+				audioSource.onended = function () {
+					if (--jinglePending === 0) {
+						element.css('visibility', 'visible');
+					}
+				};
 				audioSource.connect(audioContext.destination);
 				audioSource[audioSource.start ? 'start' : 'noteOn'](t);
 
 				t += jingleData.melody[i][1] / 1000.0;
 			}
+
+			jinglePending = jingleData.melody.length;
 		});
 	}
 
 	/*
 	** Play the Sputnik sound
 	*/
-	var sputnikPlay = function () {
+	var sputnikPending = 0;
+	var sputnikPlay = function (element) {
+		// Do not start a new jingle if one is already playing
+		if (sputnikPending) {
+			return;
+		}
+
+		// Hide button until playback ends
+		element.css('visibility', 'hidden');
+
 		// Create the audio context
 		{
 			var audioContext;
@@ -231,9 +256,16 @@ $(function () {
 		{
 			var audioSource = audioContext.createBufferSource();
 			audioSource.buffer = audioDataBuffer.buffer;
+			audioSource.onended = function () {
+				sputnikPending = 0;
+
+				element.css('visibility', 'visible');
+			};
 			audioSource.connect(audioContext.destination);
 			audioSource.start();
 		}
+
+		sputnikPending = 1;
 	}
 
 	/*
@@ -323,7 +355,7 @@ $(function () {
 			case 'yoshi':
 				wrap(target)
 					.append(createButton(basePath, 'play').on('click', function () {
-						jinglePlay(basePath, variant);
+						jinglePlay($(this), basePath, variant);
 					}));
 
 				break;
@@ -331,7 +363,7 @@ $(function () {
 			case 'helmet':
 				wrap(target)
 					.append(createButton(basePath, 'play').on('click', function () {
-						sputnikPlay();
+						sputnikPlay($(this));
 					}));
 
 				break;
