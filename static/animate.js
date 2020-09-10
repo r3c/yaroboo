@@ -3,7 +3,7 @@
 */
 $(function () {
 	var createButton = function (basePath, name) {
-		return $('<img style="position: absolute; left: 0px; top: 0px; opacity: 0.75; width: 20px; height: 20px;">')
+		return $('<img class="default-helper" style="position: absolute; left: 0px; top: 0px; opacity: 0.75; width: 20px; height: 20px;">')
 			.prop('src', basePath + '/ui/' + name + '.png');
 	};
 
