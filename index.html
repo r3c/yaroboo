@@ -9,6 +9,16 @@
 		<p style="align-self: center;">
 			Input a Boo variant name and hit enter to preview it. Press Ctrl+F5 to fully refresh your changes.
 		</p>
+		<p id="warning-location" style="align-self: center; color: red; display: none;">
+			You opened this file without going through an HTTP server, JavaScript features won't work properly.
+			<script type="text/javascript">
+				$(function () {
+					if (location.href.startsWith('file://')) {
+						$('#warning-location').css('display', 'block');
+					}
+				});
+			</script>
+		</p>
 		<div id="container" style="align-self: center; padding: 8px; background-image: linear-gradient(#4b7ec1,#84a7d5);">
 		</div>
 		<p style="align-self: center;">
