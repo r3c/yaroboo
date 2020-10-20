@@ -2,14 +2,14 @@
 ** Display selected Boo variant, start associated animation if any, and handle jingles.
 */
 $(function () {
-	var createButton = function (basePath, name) {
+	var createButton = function (basePath, fileName) {
 		return $('<img class="default-helper" style="position: absolute; left: 0px; top: 0px; opacity: 0.75; width: 20px; height: 20px;">')
-			.prop('src', basePath + '/ui/' + name + '.png');
+			.prop('src', basePath + '/ui/' + fileName);
 	};
 
-	var createLayer = function (basePath, name) {
+	var createLayer = function (basePath, fileName) {
 		return $('<img class="default-mascot" style="position: absolute; left: 0; top: 0; opacity: 0;">')
-			.prop('src', basePath + '/image/' + name + '.png');
+			.prop('src', basePath + '/image/' + fileName);
 	}
 
 	/*
@@ -309,11 +309,11 @@ $(function () {
 				};
 
 				wrap(target)
-					.append(createLayer(basePath, 'christmas-glow').addClass('g'))
-					.append(createLayer(basePath, 'christmas-light0').addClass('l'))
-					.append(createLayer(basePath, 'christmas-light1').addClass('l'))
-					.append(createLayer(basePath, 'christmas-light2').addClass('l'))
-					.append(createLayer(basePath, 'christmas-light3').addClass('l'))
+					.append(createLayer(basePath, 'christmas-glow.png').addClass('g'))
+					.append(createLayer(basePath, 'christmas-light0.png').addClass('l'))
+					.append(createLayer(basePath, 'christmas-light1.png').addClass('l'))
+					.append(createLayer(basePath, 'christmas-light2.png').addClass('l'))
+					.append(createLayer(basePath, 'christmas-light3.png').addClass('l'))
 					.find('.g').each(function () { tick($(this), 1000, [500, 500], 0); }).end()
 					.find('.l').each(function () { tick($(this), 250, [100, 100, 200, 200, 500, 500], 0); }).end();
 
@@ -329,9 +329,9 @@ $(function () {
 				};
 
 				wrap(target)
-					.append(createLayer(basePath, 'sleep-z0').addClass('z0'))
-					.append(createLayer(basePath, 'sleep-z1').addClass('z1'))
-					.append(createLayer(basePath, 'sleep-z2').addClass('z2'))
+					.append(createLayer(basePath, 'sleep-z0.png').addClass('z0'))
+					.append(createLayer(basePath, 'sleep-z1.png').addClass('z1'))
+					.append(createLayer(basePath, 'sleep-z2.png').addClass('z2'))
 					.each(function () { tick($(this), 0); });
 
 				break;
@@ -355,7 +355,7 @@ $(function () {
 			case 'unicorn':
 			case 'yoshi':
 				wrap(target)
-					.append(createButton(basePath, 'play').on('click', function () {
+					.append(createButton(basePath, 'play-button.svg').on('click', function () {
 						jinglePlay($(this), basePath, variant);
 					}));
 
@@ -363,7 +363,7 @@ $(function () {
 
 			case 'helmet':
 				wrap(target)
-					.append(createButton(basePath, 'play').on('click', function () {
+					.append(createButton(basePath, 'play-button.svg').on('click', function () {
 						sputnikPlay($(this));
 					}));
 
