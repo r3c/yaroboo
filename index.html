@@ -51,7 +51,7 @@
                     $(this).val('');
                 });
 
-                select('default');
+                select($.cookie('boo') || 'default');
             });
         </script>
     </p>
