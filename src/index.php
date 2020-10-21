@@ -109,10 +109,10 @@ function get_variant($agent, $appid, $time, $user)
             'nukem' => function ($state) {
                 return $state->month === 8 && $state->day === 25;
             },
-			'china' => function ($state) {
+            'china' => function ($state) {
                 return $state->month === 8 && $state->day === 29;
             },
-			'helmet' => function ($state) {
+            'helmet' => function ($state) {
                 return $state->month === 9 && $state->day === 3;
             },
             'unicorn' => function ($state) {
@@ -193,7 +193,7 @@ function get_variant($agent, $appid, $time, $user)
             'sunglass' => function ($state) {
                 return $state->hour >= 10 && $state->hour <= 18 && $state->cloudiness < 10 && $state->temperature > 297.15;
             },
-			'fan' => function ($state) {
+            'fan' => function ($state) {
                 return $state->temperature > 297.15;
             }
         );
