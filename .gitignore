@@ -1,4 +1,6 @@
+/node_modules/
 /src/config.php
 /src/config.php.*
 !/src/config.php.dist
+/package-lock.json
 .creep.env

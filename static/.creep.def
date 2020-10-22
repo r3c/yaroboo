@@ -4,8 +4,8 @@
 			"pattern": "\\.min\\.js$"
 		},
 		{
-			"pattern": "\\.js$",
-			"modify": "uglifyjs --compress --mangle -- '{}'"
+			"pattern": "^main\\.js$",
+			"modify": "npx rollup --config rollup.config.js --input '{}' --silent"
 		}
 	]
 }

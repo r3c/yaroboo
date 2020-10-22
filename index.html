@@ -1,60 +1,58 @@
 <html>
-
-<head>
-    <meta charset="UTF-8" />
-    <script type="text/javascript" src="https://yaronet.org/library/jquery/jquery-3.1.1.js"></script>
-    <script type="text/javascript" src="https://yaronet.org/library/jquery.cookie/jquery.cookie.js" defer></script>
-    <title>yAroboo demo</title>
-</head>
-
-<body style="height: 100%; padding: 0; margin: 0; display: flex; flex-direction: column; justify-content: center;">
-    <p style="align-self: center;">
-        Input a Boo variant name and hit enter to preview it. Press Ctrl+F5 to fully refresh your changes.
-    </p>
-    <p id="warning-location" style="align-self: center; color: red; display: none;">
-        You opened this file without going through an HTTP server, JavaScript features won't work properly.
-        <script type="text/javascript">
-            $(function() {
-                if (location.href.startsWith('file://')) {
-                    $('#warning-location').css('display', 'block');
-                }
-            });
-        </script>
-    </p>
-    <div id="container" style="align-self: center; padding: 8px; background-image: linear-gradient(#4b7ec1,#84a7d5);">
-    </div>
-    <p style="align-self: center;">
-        Variant name: <input id="force" type="text" />
-        <script type="text/javascript">
-            $(function() {
-                var select = function(name) {
-                    var unique = Math.random();
-
-                    $.cookie('boo', name);
-
-                    $('#container')
-                        .empty()
-                        .append($('<img id="yn-mascot">')
-                            .prop('src', 'res/image/' + name + '.png?cb=' + unique))
-                        .append($('<script type="text/javascript" async>')
-                            .prop('src', 'static/animate.js?cb=' + unique));
-                };
-
-                $('#force').on('keyup', function(event) {
-                    if (event.which !== 13)
-                        return;
-
-                    select($(this).val());
-
-                    event.preventDefault();
-
-                    $(this).val('');
+    <head>
+        <meta charset="UTF-8" />
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" src="https://yaronet.org/library/jquery.cookie/jquery.cookie.js" defer></script>
+        <title>yAroboo demo</title>
+    </head>
+    <body style="height: 100%; padding: 0; margin: 0; display: flex; flex-direction: column; justify-content: center;">
+        <p style="align-self: center;">
+            Input a Boo variant name and hit enter to preview it. Press Ctrl+F5 to fully refresh your changes.
+        </p>
+        <p id="warning-location" style="align-self: center; color: red; display: none;">
+            You opened this file without going through an HTTP server, JavaScript features won't work properly.
+            <script type="text/javascript">
+                $(function () {
+                    if (location.href.startsWith('file://')) {
+                        $('#warning-location').css('display', 'block');
+                    }
                 });
+            </script>
+        </p>
+        <div id="container"
+            style="align-self: center; padding: 8px; background-image: linear-gradient(#4b7ec1,#84a7d5);">
+        </div>
+        <p style="align-self: center;">
+            Variant name: <input id="force" type="text" />
+            <script type="text/javascript">
+                $(function () {
+                    var select = function (name) {
+                        var unique = Math.random();
 
-                select($.cookie('boo') || 'default');
-            });
-        </script>
-    </p>
-</body>
+                        $.cookie('boo', name);
 
+                        $('#container')
+                            .empty()
+                            .append($('<img id="yn-mascot">')
+                                .prop('src', 'res/image/' + name + '.png?cb=' + unique))
+                            .append($('<script type="text/javascript" async>')
+                                .prop('src', 'static/main.js?cb=' + unique));
+                    };
+
+                    $('#force').on('keyup', function (event) {
+                        if (event.which !== 13)
+                            return;
+
+                        select($(this).val());
+
+                        event.preventDefault();
+
+                        $(this).val('');
+                    });
+
+                    select($.cookie('boo') || 'default');
+                });
+            </script>
+        </p>
+    </body>
 </html>
