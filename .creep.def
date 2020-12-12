@@ -1,0 +1,7 @@
+{
+	"cascades": [
+		"res",
+		"src",
+		"static"
+	]
+}
