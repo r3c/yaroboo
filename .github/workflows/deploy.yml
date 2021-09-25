@@ -1,0 +1,54 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+      - test
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout repository
+      - uses: actions/checkout@v2
+
+      # Extract branch name
+      - run: echo "::set-output name=name::$(echo '${{ github.ref }}' | cut -d / -f 3-)"
+        id: branch
+
+      # Deploy Creep env files
+      - uses: cuchi/jinja2-action@v1.2.0
+        with:
+          template: res/.creep.env.j2
+          output_file: res/.creep.env
+          strict: true
+          variables: |
+            password=${{ secrets.CREEP_PASSWORD }}
+            username=${{ secrets.CREEP_USERNAME }}
+      - uses: cuchi/jinja2-action@v1.2.0
+        with:
+          template: src/.creep.env.j2
+          output_file: src/.creep.env
+          strict: true
+          variables: |
+            password=${{ secrets.CREEP_PASSWORD }}
+            username=${{ secrets.CREEP_USERNAME }}
+      - uses: cuchi/jinja2-action@v1.2.0
+        with:
+          template: static/.creep.env.j2
+          output_file: static/.creep.env
+          strict: true
+          variables: |
+            password=${{ secrets.CREEP_PASSWORD }}
+            username=${{ secrets.CREEP_USERNAME }}
+
+      # Run Creep deployment
+      - uses: actions/setup-python@v1
+      - uses: BSFishy/pip-action@v1
+        with:
+          packages: creep
+      - run: creep -d res -f '' -y ${{ steps.branch.outputs.name }}
+      - run: creep -d src -f '' -y ${{ steps.branch.outputs.name }}
+      - run: creep -d static -f '' -y ${{ steps.branch.outputs.name }}

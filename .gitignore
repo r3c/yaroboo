@@ -1,4 +1,6 @@
+/res/.creep.env
+/src/.creep.env
+/static/.creep.env
 /src/config.php
 /src/config.php.*
 !/src/config.php.dist
-.creep.env
