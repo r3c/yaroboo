@@ -82,6 +82,9 @@ function get_variant($agent, $appid, $time, $user)
             'crown' => function ($state) {
                 return $state->month === 1 && $state->day === 6;
             },
+            'dog' => function ($state) {
+                return $state->month === 1 && $state->day === 13;
+            },
             'yoshi' => function ($state) {
                 return $state->month === 1 && $state->day === 24;
             },
