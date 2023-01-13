@@ -347,6 +347,7 @@ $(function() {
             case 'cardboard':
             case 'china':
             case 'cola':
+            case 'dog':
             case 'fireworks':
             case 'kirby':
             case 'nukem':
