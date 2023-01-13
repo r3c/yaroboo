@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Checkout repository
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # Extract branch name
       - run: echo "::set-output name=name::$(echo '${{ github.ref }}' | cut -d / -f 3-)"
@@ -45,10 +45,12 @@ jobs:
             username=${{ secrets.CREEP_USERNAME }}
 
       # Run Creep deployment
+      - uses: actions/setup-node@v3
       - uses: actions/setup-python@v1
       - uses: BSFishy/pip-action@v1
         with:
           packages: creep
+      - run: npm install --global uglify-js
       - run: creep -d res -f '' -y ${{ steps.branch.outputs.name }}
       - run: creep -d src -f '' -y ${{ steps.branch.outputs.name }}
       - run: creep -d static -f '' -y ${{ steps.branch.outputs.name }}
