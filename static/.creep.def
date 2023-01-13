@@ -5,7 +5,7 @@
 		},
 		{
 			"pattern": "\\.js$",
-			"modify": "uglifyjs --compress --mangle -- '{}'"
+			"modify": "uglifyjs --compress --mangle -- {}"
 		}
 	]
 }
