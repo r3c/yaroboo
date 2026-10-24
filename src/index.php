@@ -37,8 +37,6 @@ function http_get_json($agent, $url)
 
     $output = curl_exec($handle);
 
-    curl_close($handle);
-
     return $output !== false ? json_decode($output, true) : null;
 }
 
