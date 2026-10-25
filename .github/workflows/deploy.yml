@@ -47,10 +47,11 @@ jobs:
       # Run Creep deployment
       - uses: actions/setup-node@v3
       - uses: actions/setup-python@v1
-      - uses: BSFishy/pip-action@v1
-        with:
-          packages: creep
       - run: npm install --global uglify-js
+      - run: mkdir venv
+      - run: python3 -m venv venv
+      - run: source venv/bin/activate
+      - run: python3 -m pip install creep
       - run: creep -d res -f '' -y ${{ steps.branch.outputs.name }}
       - run: creep -d src -f '' -y ${{ steps.branch.outputs.name }}
       - run: creep -d static -f '' -y ${{ steps.branch.outputs.name }}
